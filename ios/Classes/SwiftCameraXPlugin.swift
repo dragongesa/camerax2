@@ -105,7 +105,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
             let image = VisionImage(image: buffer!.image)
             image.orientation = imageOrientation(
                 deviceOrientation: UIDevice.current.orientation,
-                cameraPosition: cameraPosition)
+                cameraPosition: .front)
             let detector = FaceDetector.faceDetector(options: options)
             detector.process(image) { [self] faces, error in
                 if error == nil && faces != nil {
