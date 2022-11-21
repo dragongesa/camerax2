@@ -182,6 +182,7 @@ class CameraXHandler(private val activity: Activity, private val textureRegistry
                         )
 
                         val realTimeOpts = FaceDetectorOptions.Builder()
+                            .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
                             .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
                             .setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
                             .setMinFaceSize(0.5f)
