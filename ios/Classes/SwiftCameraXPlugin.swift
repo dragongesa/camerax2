@@ -90,8 +90,53 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
                 }
                 analyzing = false
             }
+        case 2: // face
+            if analyzing {
+                break
+            }
+            // High-accuracy landmark detection and face classification
+            let options = FaceDetectorOptions()
+            options.performanceMode = .fast
+            options.landmarkMode = .all
+            options.classificationMode = .all
+            analyzing = true
+            let buffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+            let image = VisionImage(image: buffer!.image)
+            image.orientation = imageOrientation(
+                deviceOrientation: UIDevice.current.orientation,
+                cameraPosition: cameraPosition)
+            let detector = FaceDetector.faceDetector(options: options)
+            detector.process(image) { [self] faces, error in
+                if error == nil && faces != nil {
+                    for face in faces! {
+                        let event: [String: Any?] = ["name": "face", "data": face, "smilingProbability": face.smilingProbability, "leftEyeOpenProbability": face.leftEyeOpenProbability, "rightEyeOpenProbability": face.rightEyeOpenProbability]
+                        sink?(event)
+                    }
+                }
+                analyzing = false
+            }
+
         default: // none
             break
+        }
+    }
+
+    func imageOrientation(
+        deviceOrientation: UIDeviceOrientation,
+        cameraPosition: AVCaptureDevice.Position
+        ) -> UIImage.Orientation {
+            switch deviceOrientation 
+        {
+            case .portrait:
+                return cameraPosition == .front ? .leftMirrored : .right
+            case .landscapeLeft:
+                return cameraPosition == .front ? .downMirrored : .up
+            case .portraitUpsideDown:
+                return cameraPosition == .front ? .rightMirrored : .left
+            case .landscapeRight:
+                return cameraPosition == .front ? .upMirrored : .down
+            case .faceDown, .faceUp, .unknown:
+                return .up
         }
     }
     

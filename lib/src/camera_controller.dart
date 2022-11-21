@@ -119,6 +119,13 @@ class _CameraController implements CameraController {
   void handleEvent(Map<dynamic, dynamic> event) {
     final name = event['name'];
     final data = event['data'];
+    (data as Map).addAll(
+      {
+        'smilingProbability': event['smilingProbability'],
+        'leftEyeOpenProbability': event['leftEyeOpenProbability'],
+        'rightEyeOpenProbability': event['rightEyeOpenProbability'],
+      },
+    );
 
     switch (name) {
       case 'face':
