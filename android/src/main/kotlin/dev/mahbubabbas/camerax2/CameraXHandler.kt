@@ -197,6 +197,9 @@ class CameraXHandler(private val activity: Activity, private val textureRegistry
                                         val event = mapOf(
                                             "name" to "face",
                                             "data" to face.data,
+                                            "smilingProbability" to face.smilingProbability,
+                                            "leftEyeOpenProbability" to face.leftEyeOpenProbability,
+                                            "rightEyeOpenProbability" to face.rightEyeOpenProbability,
                                             "imageSize" to mapOf(
                                                 "width" to imageProxy.width.toDouble(),
                                                 "height" to imageProxy.height.toDouble()
