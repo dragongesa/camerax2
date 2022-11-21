@@ -9,10 +9,10 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = SwiftCameraXPlugin(registrar.textures())
         
-        let method = FlutterMethodChannel(name: "yanshouwang.dev/camerax/method", binaryMessenger: registrar.messenger())
+        let method = FlutterMethodChannel(name: "mahbubabbas.dev/camerax2/method", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(instance, channel: method)
         
-        let event = FlutterEventChannel(name: "yanshouwang.dev/camerax/event", binaryMessenger: registrar.messenger())
+        let event = FlutterEventChannel(name: "mahbubabbas.dev/camerax2/event", binaryMessenger: registrar.messenger())
         event.setStreamHandler(instance)
     }
     
