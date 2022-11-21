@@ -1,5 +1,5 @@
 #import "CameraXPlugin.h"
-#if __has_include(<camerax/camerax-Swift.h>)
+#if __has_include(<camerax2/camerax2-Swift.h>)
 #import <camerax2/camerax2-Swift.h>
 #else
 // Support project import fallback if the generated compatibility header
