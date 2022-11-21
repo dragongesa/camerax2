@@ -2,6 +2,7 @@ import AVFoundation
 import Flutter
 import MLKitVision
 import MLKitBarcodeScanning
+import MLKitFaceDetection
 
 public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, FlutterTexture, AVCaptureVideoDataOutputSampleBufferDelegate {
     
