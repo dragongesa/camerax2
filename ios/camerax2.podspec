@@ -3,7 +3,7 @@
 # Run `pod lib lint camerax.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'camerax'
+  s.name             = 'camerax2'
   s.version          = '0.0.1'
   s.summary          = 'A camera plugin for flutter.'
   s.description      = 'A camera plugin for flutter, which use CameraX on Android, native API on iOS, supports preview and image analysis.'
