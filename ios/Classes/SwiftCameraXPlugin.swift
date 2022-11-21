@@ -110,7 +110,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
             detector.process(image) { [self] faces, error in
                 if error == nil && faces != nil {
                     for face in faces! {
-                        let event: [String: Any?] = ["name": "face", "data": face, "smilingProbability": face.smilingProbability, "leftEyeOpenProbability": face.leftEyeOpenProbability, "rightEyeOpenProbability": face.rightEyeOpenProbability]
+                        let event: [String: Any?] = ["name": "face", "data": face]
                         sink?(event)
                     }
                 }
