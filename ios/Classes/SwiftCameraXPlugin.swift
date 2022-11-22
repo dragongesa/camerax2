@@ -30,6 +30,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
         self.registry = registry
         analyzeMode = 0
         analyzing = false
+        cameraPosition = 0
         super.init()
     }
     
