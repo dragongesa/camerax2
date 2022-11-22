@@ -24,6 +24,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
     var latestBuffer: CVImageBuffer!
     var analyzeMode: Int
     var analyzing: Bool
+    var cameraPosition: Int
     
     init(_ registry: FlutterTextureRegistry) {
         self.registry = registry
@@ -105,7 +106,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
             let image = VisionImage(image: buffer!.image)
             image.orientation = imageOrientation(
                 deviceOrientation: UIDevice.current.orientation,
-                cameraPosition: .front)
+                cameraPosition: cameraPosition == 0 ? .front : .back)
             let detector = FaceDetector.faceDetector(options: options)
             detector.process(image) { [self] faces, error in
                 if error == nil && faces != nil {
@@ -161,6 +162,7 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
         textureId = registry.register(self)
         captureSession = AVCaptureSession()
         let position = call.arguments as! Int == 0 ? AVCaptureDevice.Position.front : .back
+        cameraPosition = call.arguments as! Int
         if #available(iOS 10.0, *) {
             device = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: position).devices.first
         } else {
