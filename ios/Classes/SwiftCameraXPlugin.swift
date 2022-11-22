@@ -109,16 +109,24 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
                 deviceOrientation: UIDevice.current.orientation,
                 cameraPosition: cameraPosition == 0 ? .front : .back)
             let detector = FaceDetector.faceDetector(options: options)
-            detector.process(image) { [self] faces, error in
-                if error == nil && faces != nil {
-                    for face in faces! {
-                        let event: [String: Any?] = ["name": "face", "data": face]
-                        sink?(event)
-                    }
-                }
-                analyzing = false
-            }
+            weak var weakSelf = self
+detector.process(image) { faces, error in
+  guard let strongSelf = weakSelf else {
+    print("Self is nil!")
+    return
+  }
+  guard error == nil, let faces = faces, !faces.isEmpty else {
+    let errorString = error?.localizedDescription ?? "No faces detected."
+    print("On-Device face detection failed with error: \(errorString)")
+    return
+  }
 
+    for face in faces {
+        print("Face detected with \(face.landmarks?.count ?? 0) landmarks")
+        let event: [String: Any?] = ["name": "face", "data": face]
+        strongSelf.sink?(event)
+    }
+}
         default: // none
             break
         }
