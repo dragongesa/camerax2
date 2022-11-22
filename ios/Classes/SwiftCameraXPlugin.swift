@@ -216,22 +216,22 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
     func stopNative(_ result: FlutterResult) {
         if captureSession != nil {
             captureSession.stopRunning()
-            captureSession = nil
-        }
-        for input in captureSession.inputs {
+            for input in captureSession.inputs {
             captureSession.removeInput(input)
+            }
+            for output in captureSession.outputs {
+                captureSession.removeOutput(output)
+            }
+            device.removeObserver(self, forKeyPath: #keyPath(AVCaptureDevice.torchMode))
+            registry.unregisterTexture(textureId)
+            
+            analyzeMode = 0
+            latestBuffer = nil
+            captureSession = nil
+            device = nil
+            textureId = nil
         }
-        for output in captureSession.outputs {
-            captureSession.removeOutput(output)
-        }
-        device.removeObserver(self, forKeyPath: #keyPath(AVCaptureDevice.torchMode))
-        registry.unregisterTexture(textureId)
         
-        analyzeMode = 0
-        latestBuffer = nil
-        captureSession = nil
-        device = nil
-        textureId = nil
         
         result(nil)
     }
