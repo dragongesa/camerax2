@@ -214,7 +214,10 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
     }
     
     func stopNative(_ result: FlutterResult) {
-        captureSession.stopRunning()
+        if captureSession != nil {
+            captureSession.stopRunning()
+            captureSession = nil
+        }
         for input in captureSession.inputs {
             captureSession.removeInput(input)
         }
