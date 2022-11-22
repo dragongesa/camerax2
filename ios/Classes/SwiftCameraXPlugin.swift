@@ -196,7 +196,8 @@ public class SwiftCameraXPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, 
         let width = Double(demensions.height)
         let height = Double(demensions.width)
         let size = ["width": width, "height": height]
-        let answer: [String : Any?] = ["textureId": textureId, "size": size, "torchable": device.hasTorch]
+        let isPortrait = height > width
+        let answer: [String : Any?] = ["textureId": textureId, "size": size, "torchable": device.hasTorch, "portrait": isPortrait]
         result(answer)
     }
     
